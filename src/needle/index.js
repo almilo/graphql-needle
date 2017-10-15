@@ -1,1 +1,1 @@
-export { autoStitchAnnotatedSchemas } from './autoStitchSchemas';
+export { autoStitchAnnotatedSchemas, makeExecutableStitchedSchema } from './autoStitchSchemas';
