@@ -1,9 +1,8 @@
 {
   "name": "graphql-needle",
   "version": "0.0.0",
-  "description": "Stictch your GraphQL schemas in a declarative way",
+  "description": "Stitch your GraphQL schemas in a declarative way by using annotations",
   "scripts": {
-    "start": "node -r reify src",
     "test": "jest",
     "dev": "jest --watch"
   },
@@ -23,9 +22,11 @@
     "graphql-tools": "2.5.0"
   },
   "devDependencies": {
+    "apollo-link-http": "0.8.0",
     "babel-jest": "21.2.0",
     "babel-preset-es2015": "6.24.1",
     "jest": "21.2.1",
+    "node-fetch": "1.7.3",
     "reify": "0.12.3"
   }
 }

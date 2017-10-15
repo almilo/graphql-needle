@@ -1,18 +1,18 @@
 import { parse, visit } from 'graphql';
-import { asNamedArguments, doesNodeMatchShape, ifNodeMatches } from '../utils';
+import { asNamedArguments, doesNodeMatchShape, ifNodeMatches } from '../utils/index';
 
-export function extractLinkTypeInfos(annotatedLinkTypeDefs) {
-    const linkTypeInfos = [];
-    const linkTypeInfoExtractorVisitor = createLinkTypeInfoExtractorVisitor(linkTypeInfos);
-    const annotatedLinkTypeDefsAst = parse(annotatedLinkTypeDefs);
+export function extractStitchAnnotations(annotatedSchema) {
+    const stitchAnnotations = [];
+    const stitchAnnotationVisitor = createStitchAnnotationVisitor(stitchAnnotations);
+    const annotatedSchemaAst = parse(annotatedSchema);
 
-    visit(annotatedLinkTypeDefsAst, linkTypeInfoExtractorVisitor);
+    visit(annotatedSchemaAst, stitchAnnotationVisitor);
 
-    return linkTypeInfos;
+    return stitchAnnotations;
 }
 
-function createLinkTypeInfoExtractorVisitor(linkTypeInfos) {
-    const typeExtensionWithStitchField = {
+function createStitchAnnotationVisitor(stitchAnnotations) {
+    const typeExtensionWithStitchFieldDirective = {
         definition: {
             kind: 'ObjectTypeDefinition',
             name: {
@@ -23,7 +23,7 @@ function createLinkTypeInfoExtractorVisitor(linkTypeInfos) {
     };
 
     return {
-        TypeExtensionDefinition: ifNodeMatches(typeExtensionWithStitchField, extractLinkTypeInfo)
+        TypeExtensionDefinition: ifNodeMatches(typeExtensionWithStitchFieldDirective, extractStitchAnnotation)
     };
 
     function hasStitchAnnotatedField(fields) {
@@ -37,7 +37,7 @@ function createLinkTypeInfoExtractorVisitor(linkTypeInfos) {
             );
     }
 
-    function extractLinkTypeInfo({definition}) {
+    function extractStitchAnnotation({definition}) {
         const stitchField = definition.fields[0];
         const stitchDirective = stitchField.directives[0];
         const extendedType = definition.name.value;
@@ -48,7 +48,7 @@ function createLinkTypeInfoExtractorVisitor(linkTypeInfos) {
             queryParameter: resolverQueryParameter
         } = asNamedArguments(stitchDirective.arguments);
 
-        linkTypeInfos.push({
+        stitchAnnotations.push({
             extendedType,
             extendedTypeKeyField,
             extensionField,
