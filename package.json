@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "description": "Stictch your GraphQL schemas in a declarative way",
   "scripts": {
+    "start": "node -r reify src",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
