@@ -1,0 +1,26 @@
+{
+  "name": "graphql-needle",
+  "version": "0.0.0",
+  "description": "Stictch your GraphQL schemas in a declarative way",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "GraphQL",
+    "schema",
+    "schema language",
+    "stitch",
+    "decorators",
+    "Apollo",
+    "JavaScript"
+  ],
+  "author": "Alberto Mijares <almilo@almilo.es>",
+  "license": "MIT",
+  "dependencies": {
+    "graphql": "0.11.7",
+    "graphql-tools": "2.5.0"
+  },
+  "devDependencies": {
+    "reify": "0.12.3"
+  }
+}
