@@ -1,5 +1,5 @@
 import { graphql } from 'graphql';
-import { makeAnnotatedExecutableSchema } from '..';
+import { makeAnnotatedExecutableSchema } from '../..';
 
 const authorSchemaUri = 'https://8xz15vx5q.lp.gql.zone/graphql'; // Apollo Launchpad https://launchpad.graphql.com/vpzl4vxr3
 const chirpSchemaUri = 'https://vpzl4vxr3.lp.gql.zone/graphql'; // Apollo Launchpad https://launchpad.graphql.com/8xz15vx5q
