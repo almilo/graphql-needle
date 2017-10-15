@@ -5,11 +5,14 @@ const query = `
     query {
       chirpById(id: "fakeChirpId") {
         text
-      }
-      userById(id: "fakeChirpId") {
-        email
+        author {
+            email
+            chirps {
+                text
+            }
+        }
       }
     }
 `;
 
-graphql(schema, query).then(({data}) => console.log(data));
+graphql(schema, query).then(({data}) => console.log(JSON.stringify(data, undefined, 2)));
