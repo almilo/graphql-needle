@@ -4,7 +4,8 @@
   "description": "Stictch your GraphQL schemas in a declarative way",
   "scripts": {
     "start": "node -r reify src",
-    "test": "jest"
+    "test": "jest",
+    "dev": "jest --watch"
   },
   "keywords": [
     "GraphQL",

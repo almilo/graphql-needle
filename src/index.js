@@ -1,5 +1,5 @@
 import { graphql } from 'graphql';
-import { schema } from './schema';
+import { annotatedSchema } from './schema';
 
 const query = `
     query {
@@ -15,4 +15,4 @@ const query = `
     }
 `;
 
-graphql(schema, query).then(({data}) => console.log(JSON.stringify(data, undefined, 2)));
+graphql(annotatedSchema, query).then(({data}) => console.log(JSON.stringify(data, undefined, 2)));

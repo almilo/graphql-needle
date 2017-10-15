@@ -1,34 +1,5 @@
-import { addMockFunctionsToSchema, makeExecutableSchema, mergeSchemas, } from 'graphql-tools';
-
-const chirpSchema = makeExecutableSchema({
-    typeDefs: `
-        type Chirp {
-          id: ID!
-          text: String
-          authorId: ID!
-        }
-        type Query {
-          chirpById(id: ID!): Chirp
-          chirpsByAuthorId(authorId: ID!): [Chirp]
-        }
-    `
-});
-
-addMockFunctionsToSchema({schema: chirpSchema});
-
-const authorSchema = makeExecutableSchema({
-    typeDefs: `
-        type User {
-          id: ID!
-          email: String
-        }
-        type Query {
-          userById(id: ID!): User
-        }
-    `
-});
-
-addMockFunctionsToSchema({schema: authorSchema});
+import { mergeSchemas, } from 'graphql-tools';
+import { authorSchema, chirpSchema } from './partialSchemas';
 
 const linkTypeDefs = `
     extend type User {
@@ -39,7 +10,7 @@ const linkTypeDefs = `
     }
 `;
 
-const linkTypeResolvers = mergeInfo => ({
+const linkTypeResolversFn = mergeInfo => ({
     User: {
         chirps: {
             fragment: `fragment UserFragment on User { id }`,
@@ -76,7 +47,7 @@ const linkTypeResolvers = mergeInfo => ({
     },
 });
 
-export const schema = mergeSchemas({
+export const programmaticSchema = mergeSchemas({
     schemas: [chirpSchema, authorSchema, linkTypeDefs],
-    resolvers: linkTypeResolvers,
+    resolvers: linkTypeResolversFn,
 });

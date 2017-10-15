@@ -1,0 +1,1 @@
+export { autoStitchAnnotatedSchemas } from './autoStitchSchemas';
