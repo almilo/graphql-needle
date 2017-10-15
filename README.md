@@ -89,3 +89,5 @@ const annotatedSchema = `
 
 const executableSchema = await makeAnnotatedExecutableSchema(annotatedSchema);
 ```
+
+[See running example](https://github.com/almilo/graphql-needle/blob/master/src/test/annotatedSchema.test.js)
