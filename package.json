@@ -9,11 +9,21 @@
     "build": "babel src/lib --out-dir dist",
     "prepublish": "npm run build"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/almilo/graphql-needle.git"
+  },
+  "bugs": {
+    "url": "https://github.com/almilo/graphql-needle/issues"
+  },
+  "homepage": "https://github.com/almilo/graphql-needle#readme",
   "keywords": [
     "GraphQL",
     "schema",
     "schema language",
     "stitch",
+    "annotations",
+    "directives",
     "decorators",
     "Apollo",
     "JavaScript"
