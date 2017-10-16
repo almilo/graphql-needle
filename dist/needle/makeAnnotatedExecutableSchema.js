@@ -4,10 +4,6 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _regenerator = require('babel-runtime/regenerator');
-
-var _regenerator2 = _interopRequireDefault(_regenerator);
-
 var _nodeFetch = require('node-fetch');
 
 var _nodeFetch2 = _interopRequireDefault(_nodeFetch);
@@ -26,7 +22,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 exports.default = function makeAnnotatedExecutableSchema(annotatedSchema) {
     var remoteSchemaAnnotations, remoteSchemaPromises, remoteSchemas, toRemoteSchemas;
-    return _regenerator2.default.async(function makeAnnotatedExecutableSchema$(_context) {
+    return regeneratorRuntime.async(function makeAnnotatedExecutableSchema$(_context) {
         while (1) {
             switch (_context.prev = _context.next) {
                 case 0:
@@ -43,7 +39,7 @@ exports.default = function makeAnnotatedExecutableSchema(annotatedSchema) {
                     remoteSchemaAnnotations = (0, _schemaAnnotationExtractor.extractSchemaAnnotations)(annotatedSchema);
                     remoteSchemaPromises = remoteSchemaAnnotations.map(toRemoteSchemas);
                     _context.next = 5;
-                    return _regenerator2.default.awrap(Promise.all(remoteSchemaPromises));
+                    return regeneratorRuntime.awrap(Promise.all(remoteSchemaPromises));
 
                 case 5:
                     remoteSchemas = _context.sent;
