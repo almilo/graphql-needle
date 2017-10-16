@@ -7,7 +7,7 @@
     "test": "jest",
     "dev": "jest --watch",
     "build": "babel src/lib --out-dir dist",
-    "prepublish": "npm run build"
+    "prepare": "npm run build"
   },
   "repository": {
     "type": "git",
