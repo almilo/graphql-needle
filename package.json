@@ -1,6 +1,6 @@
 {
   "name": "graphql-needle",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "description": "Stitch your GraphQL schemas in a declarative way by using annotations",
   "main": "dist/index.js",
   "scripts": {
