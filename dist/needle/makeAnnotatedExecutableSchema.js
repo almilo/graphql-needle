@@ -3,6 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
+exports.default = makeAnnotatedExecutableSchema;
 
 var _nodeFetch = require('node-fetch');
 
@@ -20,43 +21,29 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-exports.default = function makeAnnotatedExecutableSchema(annotatedSchema) {
-    var remoteSchemaAnnotations, remoteSchemaPromises, remoteSchemas, toRemoteSchemas;
-    return regeneratorRuntime.async(function makeAnnotatedExecutableSchema$(_context) {
-        while (1) {
-            switch (_context.prev = _context.next) {
-                case 0:
-                    toRemoteSchemas = function toRemoteSchemas(_ref) {
-                        var uri = _ref.uri;
+function makeAnnotatedExecutableSchema(annotatedSchema) {
+    var remoteSchemaAnnotations = (0, _schemaAnnotationExtractor.extractSchemaAnnotations)(annotatedSchema);
+    var remoteSchemaPromises = remoteSchemaAnnotations.map(toRemoteSchemasPromises);
 
-                        var link = new _apolloLinkHttp.HttpLink({ uri: uri, fetch: _nodeFetch2.default });
-
-                        return (0, _graphqlTools.introspectSchema)(link).then(function (schema) {
-                            return (0, _graphqlTools.makeRemoteExecutableSchema)({ schema: schema, link: link });
-                        });
-                    };
-
-                    remoteSchemaAnnotations = (0, _schemaAnnotationExtractor.extractSchemaAnnotations)(annotatedSchema);
-                    remoteSchemaPromises = remoteSchemaAnnotations.map(toRemoteSchemas);
-                    _context.next = 5;
-                    return regeneratorRuntime.awrap(Promise.all(remoteSchemaPromises));
-
-                case 5:
-                    remoteSchemas = _context.sent;
-                    return _context.abrupt('return', (0, _graphqlTools.mergeSchemas)({
-                        schemas: remoteSchemas.concat(annotatedSchema),
-                        resolvers: function resolvers(mergeInfo) {
-                            return generateLinkTypeResolvers(annotatedSchema, mergeInfo);
-                        }
-                    }));
-
-                case 7:
-                case 'end':
-                    return _context.stop();
+    return Promise.all(remoteSchemaPromises).then(function (remoteSchemas) {
+        return (0, _graphqlTools.mergeSchemas)({
+            schemas: remoteSchemas.concat(annotatedSchema),
+            resolvers: function resolvers(mergeInfo) {
+                return generateLinkTypeResolvers(annotatedSchema, mergeInfo);
             }
-        }
-    }, null, this);
-};
+        });
+    });
+
+    function toRemoteSchemasPromises(_ref) {
+        var uri = _ref.uri;
+
+        var link = new _apolloLinkHttp.HttpLink({ uri: uri, fetch: _nodeFetch2.default });
+
+        return (0, _graphqlTools.introspectSchema)(link).then(function (schema) {
+            return (0, _graphqlTools.makeRemoteExecutableSchema)({ schema: schema, link: link });
+        });
+    }
+}
 
 function generateLinkTypeResolvers(annotatedSchema, mergeInfo) {
     return (0, _stitchAnnotationExtractor.extractStitchAnnotations)(annotatedSchema).map(function (stitchAnnotation) {

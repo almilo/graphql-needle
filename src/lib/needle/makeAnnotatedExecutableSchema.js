@@ -4,17 +4,18 @@ import { introspectSchema, makeRemoteExecutableSchema, mergeSchemas } from 'grap
 import { extractStitchAnnotations } from './stitchAnnotationExtractor';
 import { extractSchemaAnnotations } from './schemaAnnotationExtractor';
 
-export default async function makeAnnotatedExecutableSchema(annotatedSchema) {
+export default function makeAnnotatedExecutableSchema(annotatedSchema) {
     const remoteSchemaAnnotations = extractSchemaAnnotations(annotatedSchema);
-    const remoteSchemaPromises = remoteSchemaAnnotations.map(toRemoteSchemas);
-    const remoteSchemas = await Promise.all(remoteSchemaPromises);
+    const remoteSchemaPromises = remoteSchemaAnnotations.map(toRemoteSchemasPromises);
 
-    return mergeSchemas({
-        schemas: remoteSchemas.concat(annotatedSchema),
-        resolvers: mergeInfo => generateLinkTypeResolvers(annotatedSchema, mergeInfo)
+    return Promise.all(remoteSchemaPromises).then(remoteSchemas => {
+        return mergeSchemas({
+            schemas: remoteSchemas.concat(annotatedSchema),
+            resolvers: mergeInfo => generateLinkTypeResolvers(annotatedSchema, mergeInfo)
+        });
     });
 
-    function toRemoteSchemas({uri}) {
+    function toRemoteSchemasPromises({uri}) {
         const link = new HttpLink({uri, fetch});
 
         return introspectSchema(link).then(schema => makeRemoteExecutableSchema({schema, link}));
