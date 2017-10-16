@@ -4,6 +4,14 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
+var _defineProperty2 = require('babel-runtime/helpers/defineProperty');
+
+var _defineProperty3 = _interopRequireDefault(_defineProperty2);
+
+var _regenerator = require('babel-runtime/regenerator');
+
+var _regenerator2 = _interopRequireDefault(_regenerator);
+
 var _nodeFetch = require('node-fetch');
 
 var _nodeFetch2 = _interopRequireDefault(_nodeFetch);
@@ -18,11 +26,9 @@ var _schemaAnnotationExtractor = require('./schemaAnnotationExtractor');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 exports.default = function makeAnnotatedExecutableSchema(annotatedSchema) {
     var remoteSchemaAnnotations, remoteSchemaPromises, remoteSchemas, toRemoteSchemas;
-    return regeneratorRuntime.async(function makeAnnotatedExecutableSchema$(_context) {
+    return _regenerator2.default.async(function makeAnnotatedExecutableSchema$(_context) {
         while (1) {
             switch (_context.prev = _context.next) {
                 case 0:
@@ -39,7 +45,7 @@ exports.default = function makeAnnotatedExecutableSchema(annotatedSchema) {
                     remoteSchemaAnnotations = (0, _schemaAnnotationExtractor.extractSchemaAnnotations)(annotatedSchema);
                     remoteSchemaPromises = remoteSchemaAnnotations.map(toRemoteSchemas);
                     _context.next = 5;
-                    return regeneratorRuntime.awrap(Promise.all(remoteSchemaPromises));
+                    return _regenerator2.default.awrap(Promise.all(remoteSchemaPromises));
 
                 case 5:
                     remoteSchemas = _context.sent;
@@ -73,12 +79,12 @@ function generateLinkTypeResolver(_ref2, mergeInfo) {
         resolverQueryField = _ref2.resolverQueryField,
         resolverQueryParameter = _ref2.resolverQueryParameter;
 
-    return _defineProperty({}, extendedType, _defineProperty({}, extensionField, {
+    return (0, _defineProperty3.default)({}, extendedType, (0, _defineProperty3.default)({}, extensionField, {
         fragment: 'fragment ' + extendedType + 'Fragment on ' + extendedType + ' { ' + extendedTypeKeyField + ' }',
         resolve: function resolve(parent, args, context, info) {
             var parentKeyValue = parent[extendedTypeKeyField];
 
-            return mergeInfo.delegate('query', resolverQueryField, _defineProperty({}, resolverQueryParameter, parentKeyValue), context, info);
+            return mergeInfo.delegate('query', resolverQueryField, (0, _defineProperty3.default)({}, resolverQueryParameter, parentKeyValue), context, info);
         }
     }));
 }
